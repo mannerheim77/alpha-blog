@@ -5,4 +5,8 @@ class ArticlesController < ApplicationController
     # byebug  # pause here
     @article = Article.find(params[:id])
   end
+
+  def index
+    @articles = Article.all
+  end
 end
