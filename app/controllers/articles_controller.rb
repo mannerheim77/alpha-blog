@@ -32,22 +32,21 @@ class ArticlesController < ApplicationController
   def update
     @article = Article.find(params[:id])
 
-    # first way to update is just call setters and then save:
-    #
-    # new_params = params.require(:article).permit(:title, :description)
-    # @article.title = new_params[:title]
-    # @article.description = new_params[:description]
-    #
-    # if @article.save
-    #
-    # Better way is to call the update method:
-    #
     if @article.update(params.require(:article).permit(:title, :description))
       flash[:notice] = 'Article was updated successfully.'
       redirect_to articles_path
     else
       render 'edit'
     end
+  end
 
+  def destroy
+    @article = Article.find(params[:id])
+
+    if @article.destroy
+      redirect_to articles_path
+    else
+      render 'index'
+    end
   end
 end
