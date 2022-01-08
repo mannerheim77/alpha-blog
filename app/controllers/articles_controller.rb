@@ -15,7 +15,7 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    @article = Article.new(params.require(:article).permit(:title, :description))
+    @article = Article.new(params.require(:article).permit(:title, :author, :description))
 
     if @article.save
       flash[:notice] = 'Article was created successfully.'
@@ -32,7 +32,7 @@ class ArticlesController < ApplicationController
   def update
     @article = Article.find(params[:id])
 
-    if @article.update(params.require(:article).permit(:title, :description))
+    if @article.update(params.require(:article).permit(:title, :author, :description))
       flash[:notice] = 'Article was updated successfully.'
       redirect_to articles_path
     else
@@ -44,6 +44,8 @@ class ArticlesController < ApplicationController
     @article = Article.find(params[:id])
     @article.destroy
 
-    redirect_to articles_path
+    # have to tack on the status of 303 for workaround in apparent bug
+    # in which rails redirects using DELETE instead of GET
+    redirect_to articles_path, status: 303
   end
 end
