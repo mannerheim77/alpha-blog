@@ -11,7 +11,7 @@ class ArticlesController < ApplicationController
   end
 
   def new
-    @article = Article.new  # to prevent NPE error when loading "new" page for the first time
+    @article = Article.new # to prevent NPE error when loading "new" page for the first time
   end
 
   def create
@@ -42,11 +42,8 @@ class ArticlesController < ApplicationController
 
   def destroy
     @article = Article.find(params[:id])
+    @article.destroy
 
-    if @article.destroy
-      redirect_to articles_path
-    else
-      render 'index'
-    end
+    redirect_to articles_path
   end
 end
