@@ -1,21 +1,18 @@
 class ArticlesController < ApplicationController
-  def show
-    # params is a hash that's passed into the request
-    # :id is the id of the resource (id at the end of the URL)
-    # byebug  # pause here
-    @article = Article.find(params[:id])
-  end
+  before_action :set_article, only: [:show, :edit, :update, :destroy]
+
+  def show; end
 
   def index
     @articles = Article.all
   end
 
   def new
-    @article = Article.new # to prevent NPE error when loading "new" page for the first time
+    @article = Article.new
   end
 
   def create
-    @article = Article.new(params.require(:article).permit(:title, :author, :description))
+    @article = Article.new(article_params)
 
     if @article.save
       flash[:notice] = 'Article was created successfully.'
@@ -25,14 +22,10 @@ class ArticlesController < ApplicationController
     end
   end
 
-  def edit
-    @article = Article.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @article = Article.find(params[:id])
-
-    if @article.update(params.require(:article).permit(:title, :author, :description))
+    if @article.update(article_params)
       flash[:notice] = 'Article was updated successfully.'
       redirect_to articles_path
     else
@@ -41,11 +34,20 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
-    @article = Article.find(params[:id])
     @article.destroy
 
     # have to tack on the status of 303 for workaround in apparent bug
     # in which rails redirects using DELETE instead of GET
     redirect_to articles_path, status: 303
+  end
+
+  private
+
+  def article_params
+    params.require(:article).permit(:title, :author, :description)
+  end
+
+  def set_article
+    @article = Article.find(params[:id])
   end
 end
