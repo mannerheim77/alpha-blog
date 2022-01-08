@@ -14,6 +14,10 @@
   - Model classname: Article
   - Table name: articles
 
+
+![img_2.png](img_2.png)
+
+
 ##Creating an article resource from scratch
 1. Create new database table:
    1. Generate a migration file:  `rails generate migration create_articles`
@@ -24,7 +28,7 @@
    5. If you screwed something up, you can't just update the existing create_articles.rb file, you have to first
       do a rollback like this:
       1. `rails db:rollback`  <-- This will roll back the last db change
-   6. But you should ALWAYS try to create a NEW migration file instead of rolling back
+      2. But you should ALWAYS try to create a NEW migration file instead of rolling back
 2. Create article model:
    1. In `models` folder create a new file called `article.rb`
    2. Enter into the rails console:  `rails console` to test the connection to your model:
