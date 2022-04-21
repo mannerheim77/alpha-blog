@@ -19,3 +19,13 @@
   - `heroku run rails db:migrate`
 - open your Heroku app:
   - `heroku open`
+
+  
+##Random Notes
+
+- When you change your model you need to reload the rails console by doing: `reload!`
+- To check if your model is valid:  `user.valid?`
+- To check your model's error messages:  `user.errors.full_messages`
+- To backfill old articles records with a user do this:  `Article.update_all(user_id: User.first.id)`
+
+Rubular.com - a great website to check Ruby regular expressions
